@@ -1,5 +1,5 @@
 $(function() {
-
+        var count = 0;
         var tasks = [];
         const filter = {
             searchText: ''
@@ -13,7 +13,7 @@ $(function() {
             document.querySelector('.items').innerHTML = ''
         
             filteredNotes.forEach(function(note){
-                var add = '<div class="task"><p class="text">' + note + '</p><button class="task-btn"><img src="images/cross.png" class="task-img" alt="options"></button></div>'
+                var add = '<div class="task"><p class="text">' + note + '</p><button class="task-btn"><img src="images/cross.png" class="task-img" alt="options"></button></div>';
                 $('.items').append(add);
             })
         };
@@ -33,18 +33,11 @@ $(function() {
 
         function addItem(){
             var addedItem = $('input[name=add]').val();
-            var add = '<div class="task"><p class="text">' + addedItem + '</p><button class="task-btn"><img src="images/cross.png" class="task-img" alt="options"></button></div>'
+            var add = '<div class="task"  data-id="' + count + '"><p class="text">' + addedItem + '</p><button class="task-btn"><img src="images/cross.png" class="task-img" alt="options"></button></div>'
             $('.items').append(add);
+            count++;
             tasks.push(addedItem);
             console.log(tasks);
-        };
-
-        function searchItem(){
-            var searchInput = $('search-bar input').val();
-            var items = $('.task');
-            if(items.includes(searchInput)){
-                this.remove();
-            };
         };
 
         $('.add-bar button').click(function(){
@@ -64,7 +57,11 @@ $(function() {
         $('.items').on('click', '.task-btn', function(){
             console.log('clicked');
             $(this).parent().remove();
-            console.log(this);
+            var id = $(this).parent().attr('data-id');
+            
+            tasks.splice(id,1);
+
+            console.log(id);
         });
 
 });
